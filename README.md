@@ -2,6 +2,10 @@
 
 This repository houses _The Economist_'s estimates of future nutritional outcomes based on past and present incidence of nutritional deficiencies and country population projections. 
 
-## To do:
-* Get in other malnutrition variables. Iron, wasting, and mental stimulation (if possible)
-* Model malnutrition rates where missing. This will require GDP per capita PPP data from WDI. Many of the countries for which this data is missing are rich, but not all (e.g. Russia). 
+## Contents:
+1. Estimates and projections to 2050 of stunting in newborn children and anaemia in pregnant women
+2. Estimates of proportion of kids who are developmentally delayed, by country
+3. Charts and stats based on these metrics
+
+## Sources:
+UN, WHO, UNICEF
