@@ -78,9 +78,41 @@ dat$estimate_high[is.na(dat$estimate_high)] <- dat$region_estimate_high[is.na(da
 unique(dat$iso3c[is.na(dat$estimate) & dat$year == 2022])
 
 # Stats for text:
-sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 20]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)
+res <- data.frame()
+for(i in c(0:10)*5){
+  res <- rbind(res, c(i,
+                      sum(dat$Births[dat$year == 2000 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= i]], na.rm = T)/sum(dat$Births[dat$year == 2000], na.rm = T),
+                      sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= i]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T),
+                      sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= i]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)))
+}
+colnames(res) <- c('percent_stunted',
+                   'this_rate_or_worse_in_2000',
+                   'this_rate_or_worse_in_2022',
+                   'this_rate_or_worse_in_2050')
+res$diff <- res[, 2]-res[, 3]
+res$note <- NA
+res$note[1] <- 'Stunting rate data ends in 2022'
+View(res)
 
-sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 30]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)
+sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= 15]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)
+
+sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= 20]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)
+
+sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= 25]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)
+
+sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= 30]], na.rm = T)/sum(dat$Births[dat$year == 2050], na.rm = T)
+
+sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 40]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T)
+
+sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= 15]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T)
+
+sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate >= 20]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T)
+
+sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 25]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T)
+
+sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 30]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T)
+
+sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 40]], na.rm = T)/sum(dat$Births[dat$year == 2022], na.rm = T)
 
 # Stage 2: Plot this data --------------------------------------------------------
 
