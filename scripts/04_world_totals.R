@@ -22,3 +22,8 @@ ggplot(world_totals, aes(x = year, y = Total_Births)) +
 
 # 2030 v today:
 View(world_totals[world_totals$year %in% c(2024, 2030), ])
+
+# Stats for text:
+world_totals$Total_anaemic_constant_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
+
+world_totals$Total_Stunted_constant_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
