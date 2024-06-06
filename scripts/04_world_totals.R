@@ -1,4 +1,4 @@
-# Investigations and projections of anaemia
+# Investigation of world totals:
 
 # Stage 1: Load packages and data --------------------------------------------------------
 library(tidyverse)
@@ -10,7 +10,7 @@ anaemia <- read_csv('output-data/anaemia_world_totals.csv')
 
 world_totals <- merge(stunting, anaemia)
 
-head(world_totals)
+# Stage 2: Investigate data visually --------------------------------------------------------
 
 ggplot(world_totals, aes(x = year, y = Total_Births)) +
   geom_line(data = world_totals[world_totals$year > 2018, ], aes(y=Total_anaemic_current_progress_rates, col = 'Rates fall at current pace'))+
@@ -21,7 +21,7 @@ ggplot(world_totals, aes(x = year, y = Total_Births)) +
   theme_minimal()+theme(legend.position = 'right', legend.title = element_blank())+expand_limits(y=0)
 
 # 2030 v today:
-View(world_totals[world_totals$year %in% c(2024, 2030), ])
+# View(world_totals[world_totals$year %in% c(2024, 2030), ])
 
 # Stats for text:
 world_totals$Total_anaemic_constant_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]

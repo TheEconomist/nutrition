@@ -70,8 +70,7 @@ df <- merge(df, gdp_data, all.x = T)
 # Subset to where all three indicators available:
 sdf <- na.omit(df[, c('iso3c', 'year', 'estimate', 'gdp_per_capita_ppp', 'stunting_estimate_who', 'anaemia_estimate_who')])
 
-# Check r-squared
+# Check adjusted r-squared
 summary(lm(estimate ~ gdp_per_capita_ppp, data = sdf))
-
 summary(lm(estimate ~ stunting_estimate_who, data = sdf))
 summary(lm(estimate ~ anaemia_estimate_who, data = sdf))
