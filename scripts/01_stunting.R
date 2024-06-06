@@ -52,6 +52,7 @@ for(i in which(is.na(mal$estimate))){
   mal[i, c('estimate', 'estimate_low', 'estimate_high')] <- extract_estimate_and_range(mal$model.based.estimates[i])
 }
 
+# Add iso3c
 mal$iso3c <- countrycode(mal$country, 'country.name', 'iso3c')
 
 # Merge the two:
@@ -75,8 +76,6 @@ dat$estimate[is.na(dat$estimate)] <- dat$region_estimate[is.na(dat$estimate)]
 dat$estimate_low[is.na(dat$estimate_low)] <- dat$region_estimate_low[is.na(dat$estimate_low)]
 dat$estimate_high[is.na(dat$estimate_high)] <- dat$region_estimate_high[is.na(dat$estimate_high)]
 
-unique(dat$iso3c[is.na(dat$estimate) & dat$year == 2022])
-
 # Stats for text:
 res <- data.frame()
 for(i in c(0:10)*5){
@@ -95,7 +94,6 @@ colnames(res) <- c('percent_stunted',
 res$diff <- res[, 2]-res[, 3]
 res$note <- NA
 res$note[1] <- 'Stunting rate data ends in 2022'
-View(res)
 
 sum(dat$Births[dat$year == 2050 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 20]])-sum(dat$Births[dat$year == 2022 & dat$iso3c %in% dat$iso3c[dat$year == 2022 & dat$estimate > 20]])
 sum(dat$Births[dat$year == 2050])-sum(dat$Births[dat$year == 2024])
@@ -226,7 +224,6 @@ ggplot(world_totals, aes(x = year, y = Total_Births)) +
 # First check that every country is (projected to be) on the right track:
 change <- dat[dat$year %in% c(2022, 2030), c('iso3c', 'projected_estimate_current_progress_rates', 'year')]
 change <- change[order(change$year), ]
-
 # Some countries are not, it appears.
 
 # Cycle through countries, mindful that some countries appear to be getting worse:

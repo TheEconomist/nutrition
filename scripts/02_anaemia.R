@@ -49,6 +49,7 @@ dat <- dat[!is.na(dat$iso3c), ]
 # Get regional estimates:
 ana_regions <- data.frame(read_csv('source-data/GHO_anaemia_regions.csv'))
 ana_regions <- ana_regions %>% mutate(region = UN.Region, anaemia_rate = Prevalence.of.anaemia.in.pregnant.women..aged.15.49....., year = Year) %>% select(region, year, anaemia_rate)
+ana_regions$region[ana_regions$region == "Northern America (21)"] <- "Northern America"
 for(i in 1:nrow(ana_regions)){
   ana_regions[i, c('region_estimate', 'region_estimate_low', 'region_estimate_high')] <- extract_estimate_and_range(ana_regions$anaemia_rate[i])
 }
@@ -57,7 +58,7 @@ for(i in 1:nrow(ana_regions)){
 dat$region <- countrycode(dat$iso3c, 'iso3c', 'un.regionsub.name')
 dat$region[dat$iso3c == 'TWN'] <- 'Eastern Asia'
 dat$region[dat$iso3c == 'XKX'] <- 'Southern Europe'
-dat <- merge(dat, mal_regions, by= c('year', 'region'), all.x= T)
+dat <- merge(dat, ana_regions, by= c('year', 'region'), all.x= T)
 
 dat$estimate[is.na(dat$estimate) & dat$year < 2020] <- dat$region_estimate[is.na(dat$estimate)]
 dat$estimate_low[is.na(dat$estimate_low) & dat$year < 2020] <- dat$region_estimate_low[is.na(dat$estimate_low)]
@@ -107,20 +108,6 @@ world_totals <- dat %>%
     Total_anaemic_high_constant_rates = sum(anaemic_kids_constant_rates_high, na.rm = TRUE),
     .groups = 'drop'
   )
-
-# Create a line plot for total anaemic Pregnant women at constant rates
-ggplot(world_totals, aes(x = year, y = Total_anaemic_constant_rates)) +
-  geom_line() +
-  geom_line(aes(y = Total_anaemic_low_constant_rates), color = 'gray') +
-  geom_line(aes(y = Total_anaemic_high_constant_rates), color = 'gray') +
-  theme_minimal() +
-  labs(x = "Year", y = "Total anaemic Pregnant women (Constant Rates)")
-
-# Create a ribbon plot for the proportion of anaemic Pregnant women at constant rates
-ggplot(world_totals, aes(x = year, y = Total_anaemic_constant_rates / Total_Births)) +
-  geom_ribbon(aes(ymin = Total_anaemic_low_constant_rates / Total_Births, ymax = Total_anaemic_high_constant_rates / Total_Births), fill = 'gray') +
-  geom_line() +
-  labs(x = "Year", y = "Proportion of Pregnant women anaemic (Constant Rates Estimate)")
 
 # Additional line plot for proportions at constant rates
 ggplot(world_totals, aes(x = year, y = Total_anaemic_constant_rates / Total_Births)) +
@@ -241,7 +228,6 @@ ggsave('plots/amaemia_world_total.png', height = 5, width = 5)
 
 # Stage 5: Export --------------------------------------------------------
 write_csv(world_totals, 'output-data/anaemia_world_totals.csv')
-
 
 dat <- dat %>% rename(anaemia_estimate_who = estimate,
                       anaemia_estimate_who_low = estimate_low,
