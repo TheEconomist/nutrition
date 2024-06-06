@@ -20,18 +20,13 @@ ggplot(world_totals, aes(x = year, y = Total_Births)) +
   labs(x = "", title = "Pregnant women anaemic, world, estimated", y="") +
   theme_minimal()+theme(legend.position = 'right', legend.title = element_blank())+expand_limits(y=0)
 
-# 2030 v today:
-# View(world_totals[world_totals$year %in% c(2024, 2030), ])
-
 # Stats for text:
 world_totals$Total_anaemic_constant_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
-
+world_totals$Total_anaemic_constant_rates[world_totals$year == 2024]/world_totals$Total_Births[world_totals$year == 2024]
 world_totals$Total_Stunted_constant_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
-
 world_totals$Total_anaemic_current_progress_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
-
 world_totals$Total_Stunted_current_progress_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
-
+world_totals$Total_anaemic_2x_current_progress_rates[world_totals$year == 2050]/world_totals$Total_Births[world_totals$year == 2050]
 
 # Total and % of those born times percentage under 5 stunted in those countries in 2000 and 2024:
 world_totals$Total_Stunted_current_progress_rates[world_totals$year == 2024]*1000
