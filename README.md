@@ -35,7 +35,7 @@ The analysis is organized into four scripts.
 
 [04_world-totals.R](./scripts/04_world-totals.R) - This script loads data on worldwide estimates and scenarios of stunting and anaemia rates and absolute numbers so that one can quickly inspect and chart it. 
 
-Many of the charts used based on this data have versions available in the "plots" folder of this repository. If you have any questions about this analysis or spot an error or opportunity for improvement, please open an issue or email "sondresolstad@economist.com".
+Many of the charts used based on this data have versions available in the plots folder of this repository. If you have any questions about this analysis or spot an error or opportunity for improvement, please open an issue or email sondresolstad@economist.com.
 
 ## Notes
 * Our analysis is based on data and estimates which have considerable uncertainty. This should be kept in mind when interpreting the figures. While uncertainty in global figures should be less than the sum of uncertainty in country-level data, we are not able to provide it, as the micro-data required to quantify it is not available (it depends on correlations in errors between countries).
