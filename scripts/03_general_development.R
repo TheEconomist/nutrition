@@ -45,6 +45,9 @@ anaemia <- read_csv('output-data/anaemia_by_country_with_estimates.csv')[, c('an
 df <- merge(df, stunting, by = c('iso3c', 'year'), all.x= T)
 df <- merge(df, anaemia, by = c('iso3c', 'year'), all.x= T)
 
+# Export to file:
+write_csv(df, 'output-data/nutrition_and_developmental_outcomes.csv')
+
 ggplot(df, aes(x=stunting_estimate_who, y=estimate, col=iso3c, size = TPopulation1July))+
   geom_point(col='gray')+ggtitle('Children aged 36-59 months who are developmentally on track in at least three of the following domains:\n literacy-numeracy, physical development, social-emotional development and learning (%)')+geom_point(data = df[df$TPopulation1July > 50000, ], aes(col=country))+
   theme_minimal()+theme(legend.title = element_blank())+ylab('')+xlab('Stunting rate, %')+
