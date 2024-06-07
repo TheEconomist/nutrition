@@ -1,6 +1,6 @@
 # Demography, nutrition and cognition
 
-This repository houses _The Economist_'s data and scenarios of future nutritional outcomes based on past and present incidence of nutritional deficiencies and demographic projections. 
+This repository houses _The Economist_'s data and scenarios of nutritional outcomes based on past and present incidence of nutritional deficiencies and demographic projections. 
 
 ### Contents:
 1. Estimates and projections to 2050 of stunting in newborn children and anaemia in pregnant women
