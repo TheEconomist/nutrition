@@ -10,7 +10,10 @@ library(dplyr)
 wp <- read_csv('source-data/WPP2022_Demographic_Indicators_Medium.csv')
 wp$iso3c <- wp$ISO3_code
 wp$year <- wp$Time
-wp <- wp %>% select(iso3c, year, Births, PopChange, TPopulation1July, TPopulationFemale1July, TPopulationMale1July, NetMigrations, Deaths, InfantDeaths, Under5Deaths)
+wp <- wp %>% select(iso3c, year, Births, PopChange,
+                    TPopulation1July, TPopulationFemale1July,
+                    TPopulationMale1July, NetMigrations, Deaths,
+                    InfantDeaths, Under5Deaths)
 
 # Load mental development dataset:
 df <- read_csv('source-data/GHO_mental_development.csv')
@@ -62,7 +65,7 @@ ggplot(df, aes(x=anaemia_estimate_who, y=estimate, col=iso3c, size = TPopulation
 ggsave('plots/developmental_outcomes_v_amaemia.png', width = 9, height = 7)
 
 
-# Stage 3: Check explantory power --------------------------------------------------------
+# Stage 3: Check explanatory power --------------------------------------------------------
 
 # Get GDP PC PPP data from World Bank:
 library(WDI)
@@ -77,3 +80,5 @@ sdf <- na.omit(df[, c('iso3c', 'year', 'estimate', 'gdp_per_capita_ppp', 'stunti
 summary(lm(estimate ~ gdp_per_capita_ppp, data = sdf))
 summary(lm(estimate ~ stunting_estimate_who, data = sdf))
 summary(lm(estimate ~ anaemia_estimate_who, data = sdf))
+
+

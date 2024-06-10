@@ -145,7 +145,7 @@ glm_model <- glm(estimate_01 ~ as.factor(iso3c)*year, data = train, family = qua
 
 dat <- dat %>%
   mutate(
-    projected_estimate_current_progress_rates = predict(glm_model, newdata = dat[, ], type = "response")*100
+    projected_estimate_current_progress_rates = ifelse(year >= 2019, predict(glm_model, newdata = dat[, ], type = "response")*100, estimate)
   ) %>%
   mutate(
     anaemic_kids_projected_current_progress_rates = Births * (projected_estimate_current_progress_rates/100)
@@ -167,7 +167,7 @@ world_totals <- dat %>%
     .groups = 'drop'
   )
 # Plotting the model projections
-ggplot(world_totals, aes(x = year, y = Total_Births)) +
+ggplot(world_totals[world_totals$year >= 2019, ], aes(x = year, y = Total_Births)) +
   geom_line(aes(y=Total_anaemic_current_progress_rates/Total_Births))+
   labs(x = "Year", y = "Total anaemic Pregnant women (Model-Based Projection)") +
   theme_minimal()

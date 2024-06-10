@@ -1,4 +1,5 @@
 # Investigation of world totals:
+options(scipen = 999)
 
 # Stage 1: Load packages and data --------------------------------------------------------
 library(tidyverse)
@@ -37,4 +38,45 @@ world_totals$Total_Stunted_current_progress_rates[world_totals$year == 2000]/wor
 
 # Anaemic mothers world rate in 2019:
 world_totals$Total_anaemic_constant_rates[world_totals$year == 2019]/world_totals$Total_Births[world_totals$year == 2019]
+
+
+# Stage 4: Lives affected over time  --------------------------------------------------------
+
+# Calculate cumulative sums
+world_totals <- world_totals[order(world_totals$year), ]
+
+world_totals$Cumulative_Stunted_constant_rates <- cumsum(world_totals$Total_Stunted_constant_rates)
+world_totals$Cumulative_Stunted_current_progress <- cumsum(world_totals$Total_Stunted_current_progress_rates)
+world_totals$Cumulative_Stunted_2x_current_progress <- cumsum(world_totals$Total_Stunted_2x_current_progress_rates)
+world_totals$Cumulative_Anaemic_constant_rates <- cumsum(world_totals$Total_anaemic_constant_rates)
+world_totals$Cumulative_Anaemic_current_progress <- cumsum(world_totals$Total_anaemic_current_progress_rates)
+world_totals$Cumulative_Anaemic_2x_current_progress <- cumsum(world_totals$Total_anaemic_2x_current_progress_rates)
+
+# Plot the data
+library(ggplot2)
+
+ggplot(world_totals[world_totals$year >= 2019, ], aes(x = year)) +
+  geom_line(aes(y = 1000*(Cumulative_Stunted_current_progress-Cumulative_Stunted_constant_rates)/1e6,
+                color = "Stunting - Current Progress Rates")) +
+  geom_line(aes(y = 1000*(Cumulative_Stunted_2x_current_progress-Cumulative_Stunted_constant_rates)/1e6,
+                color = "Stunting - 2x Current Progress Rates")) +
+  labs(title = "Cumulative total kids affected over time for different scenarios,\ncompared to rates staying what they are now, in millions",
+       x = "",
+       y = "") +
+  theme_minimal()+theme(legend.title = element_blank())
+ggsave('plots/cumulative_stunting.png')
+
+
+ggplot(world_totals[world_totals$year >= 2019, ], aes(x = year)) +
+  geom_line(aes(y = 1000*(Cumulative_Anaemic_current_progress-Cumulative_Anaemic_constant_rates)/1e6,
+                color = "Anaemic - Current Progress Rates")) +
+  geom_line(aes(y = 1000*(Cumulative_Anaemic_2x_current_progress-Cumulative_Anaemic_constant_rates)/1e6,
+                color = "Anaemic - 2x Current Progress Rates")) +
+  labs(title = "Cumulative total kids affected over time for different scenarios,\ncompared to rates staying what they are now, in millions",
+       x = "",
+       y = "") +
+  theme_minimal()+theme(legend.title = element_blank())
+ggsave('plots/cumulative_anaemia.png')
+
+
 

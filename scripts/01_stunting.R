@@ -192,7 +192,7 @@ glm_model <- glm(estimate_01 ~ as.factor(iso3c)*year, data = train, family = qua
 
 dat <- dat %>%
   mutate(
-    projected_estimate_current_progress_rates = predict(glm_model, newdata = dat[, ], type = "response")*100
+    projected_estimate_current_progress_rates = ifelse(year >= 2022, predict(glm_model, newdata = dat[, ], type = "response")*100, estimate)
   ) %>%
   mutate(
     stunted_kids_projected_current_progress_rates = Births * (projected_estimate_current_progress_rates/100)
