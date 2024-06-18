@@ -52,9 +52,12 @@ world_totals$Cumulative_Anaemic_constant_rates <- cumsum(world_totals$Total_anae
 world_totals$Cumulative_Anaemic_current_progress <- cumsum(world_totals$Total_anaemic_current_progress_rates)
 world_totals$Cumulative_Anaemic_2x_current_progress <- cumsum(world_totals$Total_anaemic_2x_current_progress_rates)
 
+# Write data:
+write_csv(world_totals, 'output-data/world_totals.csv')
+
 # Plot the data
 library(ggplot2)
-
+world_totals <- read_csv('output-data/world_totals.csv')
 ggplot(world_totals[world_totals$year >= 2019, ], aes(x = year)) +
   geom_line(aes(y = 1000*(Cumulative_Stunted_current_progress-Cumulative_Stunted_constant_rates)/1e6,
                 color = "Stunting - Current Progress Rates")) +
