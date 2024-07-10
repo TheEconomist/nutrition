@@ -53,3 +53,6 @@ Prospects 2022: Summary of Results. UN DESA/POP/2022/TR/NO. 3.
 * [WHO Global Health Observatory Data](https://www.who.int/data/gho) - World Health Organization. (2023). Global health observatory data repository.
 * [UNICEF](https://data.unicef.org/topic/early-childhood-development/development-status/) - UNICEF. (2024). The development status of children varies widely among countries. URL: https://data.unicef.org/topic/early-childhood-development/development-status/#status
 * [World Bank](https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD) - International Comparison Program, World Bank | World Development Indicators database, World Bank | Eurostat-OECD PPP Programme.
+
+## Suggested citation
+The Economist and Solstad, Sondre (corresponding author), 2024. Malnutrition data and projections. 
